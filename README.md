@@ -10,3 +10,6 @@ This implementation of an Advanced Emergency Braking System is an ensemble of tw
 ## Run AEBS
 - Open a terminal and enter the command: `./CarlaUE.sh -opengl` to run CARLA simulator
 - Activate conda environment in another terminal then enter the command: `python3 driver.py`
+
+## References
+[Chae, Hyunmin, et al. "Autonomous braking system via deep reinforcement learning." 2017 IEEE 20th International conference on intelligent transportation systems (ITSC). IEEE, 2017.](https://arxiv.org/abs/1702.02302)
