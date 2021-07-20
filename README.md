@@ -1,6 +1,6 @@
 # Advanced Emergency Braking System 
 ## Introduction
-Advanced Emergency Braking System (AEBS) is a
+This implementation of an Advanced Emergency Braking System is an ensemble of two networks, there is a CNN based architecture for the lane following. This outputs a steering angle that is grouped with velocity and distance to lead car as the input for a Dueling DQN. The Dueling DQN calculates the Q values for each action and then the argmax is taken to get the most useful action.
 
 ## Setup Environment
 - [Install Anaconda for Linux](https://docs.anaconda.com/anaconda/install/linux/)
