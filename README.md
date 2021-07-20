@@ -9,4 +9,4 @@ Advanced Emergency Braking System (AEBS) is a
 
 ## Run AEBS
 - Open a terminal and enter the command: `./CarlaUE.sh -opengl` to run CARLA simulator
-- Activate conda environment in another terminal and enter the command: `python3 driver.py`
+- Activate conda environment in another terminal then enter the command: `python3 driver.py`
