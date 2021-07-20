@@ -1,6 +1,6 @@
 import os
 import pdb
-import dqn
+import dueling_dqn
 import time
 import torch
 import tensorboard
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     if not os.path.isdir('models'):
         os.makedirs('models')
 
-    agent = dqn.Agent()
+    agent = dueling_dqn.Agent()
     env = environment.Env()
     start_time = time.time()
 
