@@ -2,7 +2,7 @@
 ## Introduction
 This implementation of an Advanced Emergency Braking System is an ensemble of two networks, there is a CNN based architecture for lane following that outputs a steering angle which is grouped with velocity and distance as input for the following network, Dueling DQN. The Dueling DQN calculates the Q values for each action and then argmax is taken to get the most useful action.
 
-Using network, ego car is able to consistently apply brakes to avoid rear-end crashing into lead car; it is also able to maintain position in middle of lane.
+Using this ensembled network, the ego car is able to apply the brakes on-time to avoid crashing into lead car; it is able to maintain its position in middle of lane.
 
 
 ## Setup Environment
