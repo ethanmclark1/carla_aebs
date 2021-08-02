@@ -49,7 +49,7 @@ if __name__ == '__main__':
             action = actor.get_action(state, inference=False) 
             next_state, reward, done, skip_episode = env.step(action)
             episodic_return += reward
-            episodic_return = np.clip(episodic_return, a_min=-175, amax=15)
+            episodic_return = np.clip(episodic_return, a_min=-175, a_max=15)
 
             if (episodic_return < -40 and episodic_return > -100):
                 skip_episode = True
