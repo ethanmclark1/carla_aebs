@@ -62,16 +62,17 @@ class Agent():
 
             state = minibatch[0]; reward = minibatch[2]; 
             next_state = minibatch[3]; done = minibatch[4]
-            trauma_state = trauma_minibatch[0]; trauma_reward = trauma_minibatch[2]; 
-            trauma_next_state = trauma_minibatch[3]; trauma_done = trauma_minibatch[4]
-
             network_qval = self.network(state)
             target_qval = reward + (1 - done) * GAMMA * self.target(next_state)
             loss = self.network.loss(target_qval, network_qval)
-            trauma_network_qval = self.network(trauma_state)
-            trauma_target_qval = trauma_reward + (1 - trauma_done) * GAMMA * self.target(trauma_next_state)
-            loss += self.network.loss(trauma_target_qval, trauma_network_qval)
-                
+
+            if trauma_minibatch:
+                trauma_state = trauma_minibatch[0]; trauma_reward = trauma_minibatch[2]; 
+                trauma_next_state = trauma_minibatch[3]; trauma_done = trauma_minibatch[4]
+                trauma_network_qval = self.network(trauma_state)
+                trauma_target_qval = trauma_reward + (1 - trauma_done) * GAMMA * self.target(trauma_next_state)
+                loss += self.network.loss(trauma_target_qval, trauma_network_qval)   
+
             loss.backward()
             self.network.optim.step()
 
