@@ -17,27 +17,23 @@ import math
 import carla
 import random
 import numpy as np
-from dueling_dqn import CRASH_DISTANCE
+from agent import ACTION_THRESHOLD, CRASH_DISTANCE
 
-ACTION_THRESHOLD = 3.15
 FOCAL_LENGTH = 36.66184120297396
-MAX_SECONDS_PER_EPISODE = 90
+MAX_SECONDS_PER_EPISODE = 240
 MAX_DISTANCE = 15
 RGB_IMG_HEIGHT = 600
 RGB_IMG_WIDTH = 800
-SECONDS_PER_EPISODE = 75
 SEMANTIC_IMG_HEIGHT = 75
 SEMANTIC_IMG_WIDTH = 200
 
 class Env:
     def __init__(self): 
         self.client = carla.Client('localhost', 2000)
-        self.client.set_timeout(10.0)
-        self.traffic_manager = self.client.get_trafficmanager(8000)
+        self.client.set_timeout(150.0)
         self.world = self.client.get_world()
-        settings = self.world.get_settings()
-        settings.fixed_delta_seconds = 0.03
-        self.world.apply_settings(settings)
+        self.original_settings = self.world.get_settings()
+        self.world.apply_settings(carla.WorldSettings(synchronous_mode=True, fixed_delta_seconds=1/30))
         self.blueprint_library = self.world.get_blueprint_library()
         self.model3 = self.blueprint_library.filter('model3')[0]
         self.cybertruck = self.blueprint_library.filter('cybertruck')[0]
@@ -53,12 +49,15 @@ class Env:
         self.attach_sensors()
 
         while self.distance is None or self.rgb_image is None:
-            time.sleep(0.01)
+            try:
+                self.world.tick(7.5)
+            except:
+                print('WARNING: tick not recieved')
 
         # Ensure lead is ahead of ego before start
         if self.distance and self.distance < MAX_DISTANCE:
-            lead_speed = random.uniform(0.45, 0.60)
-            ego_speed = random.uniform(0.75, 0.90)
+            lead_speed = random.uniform(0.40, 0.55)
+            ego_speed = random.uniform(0.65, 0.80)
             self.lead.apply_control(carla.VehicleControl(throttle=lead_speed))
             self.ego.apply_control(carla.VehicleControl(throttle=ego_speed))
 
@@ -167,7 +166,7 @@ class Env:
         if self.distance < CRASH_DISTANCE:
             self.destroy_actor()
             self.bump = True; done = True
-        elif self.crossed_threshold and self.distance > ACTION_THRESHOLD and kmph == 0:
+        elif self.crossed_threshold and self.distance > ACTION_THRESHOLD:
             self.destroy_actor()
             done = True
 
@@ -183,8 +182,6 @@ class Env:
             more about certain things
         """
         reward = -(alpha * (self.distance)**2 + beta) * deceleration - (mu * kmph**2 + nu) * self.bump     
-        if reward > 0:
-            reward = 0
 
         self.prev_kmph = kmph
 
