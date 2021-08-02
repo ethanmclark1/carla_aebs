@@ -17,11 +17,11 @@ def plot(reward, size):
     plt.ylabel('Reward')
     plt.savefig('reward_data.png')
 
-def train(transition, distance, episode):
-    agent.remember(transition, distance)
-    agent.update_target(episode)
-    agent.learn()
-    agent.decrement_epsilon()
+def train(actor, transition, distance, episode):
+    actor.remember(transition, distance)
+    actor.update_target(episode)
+    actor.learn()
+    actor.decrement_epsilon()
 
 TRAIN_LEN = 10_000
 INFERENCE_LEN = 50
@@ -56,7 +56,7 @@ if __name__ == '__main__':
             if skip_episode:
                 break
 
-            train([state, action, reward, next_state, done], env.distance, episode)
+            train(actor, [state, action, reward, next_state, done], env.distance, episode)
             state = next_state
             
             if done:
