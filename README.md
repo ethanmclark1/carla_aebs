@@ -8,7 +8,7 @@ Using this ensembled network, the ego car is able to apply the brakes on-time to
 ## Setup Environment
 - [Install Anaconda for Linux](https://docs.anaconda.com/anaconda/install/linux/)
 - [Install CARLA for Linux](https://carla.readthedocs.io/en/0.9.11/start_quickstart/)
-- `conda create --name <env> --file requirements.txt`
+- ```shell script $ conda create --name <env> --file requirements.txt`
 
 ## Run AEBS
 - Open a terminal and enter command: `./CarlaUE.sh -opengl` to run CARLA simulator
