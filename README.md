@@ -1,9 +1,17 @@
-# Advanced Emergency Braking System 
-## Introduction
-This implementation of an Advanced Emergency Braking System is an ensemble of two networks, there is a CNN based architecture for lane following that outputs a steering angle which is grouped with velocity and distance as input for the following network, Dueling DQN. The Dueling DQN calculates the Q values for each action and then argmax is taken to get the most useful action.
+# Autonomous Emergency Braking System 
+## Overview
+The Autonomous Emergency Braking System described here integrates two neural networks for enhanced vehicle safety and lane adherence:
 
-Using this ensembled network, the ego car is able to apply the brakes on-time to avoid crashing into lead car; it is able to maintain its position in middle of lane.
+**1. Convolutional Neural Network (CNN) for Lane Following**:
+- This network is responsible for determining the steering angle.
+- The output is based on visual inputs, ensuring the vehicle remains centered within its lane.
 
+**2. Dueling Deep Q-Network (Dueling DQN)**:
+- This network receives the steering angle from the CNN, combined with data on velocity and distance.
+- It then computes Q-values for potential actions.
+- The action with the highest Q-value is selected, guiding the vehicle's next move.
+
+Together, these networks enable the vehicle to autonomously apply brakes as needed, preventing collisions with vehicles ahead while ensuring consistent lane positioning.
 
 ## Setup Environment
 - [Install Anaconda for Linux](https://docs.anaconda.com/anaconda/install/linux/)
